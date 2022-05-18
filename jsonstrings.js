@@ -1,12 +1,9 @@
 const fs = require('fs');
-const { getSystemErrorMap } = require('util');
 
-let keywords = [];
-
-function printValues(obj) {
+function extractStringsFromJson(obj, keywords) {
     for(var key in obj) {
         if(obj[key] instanceof Object) {
-            printValues(obj[key]);
+            extractStringsFromJson(obj[key],keywords);
         } else {
             let value = obj[key];
             if ( typeof value ===  "string" ){
@@ -27,7 +24,8 @@ fs.readFile('test.json', 'utf8', function(err, data) {
     if (err) throw err;
 
     let my_object = JSON.parse(data);
-    printValues(my_object);
+    let keywords = [];
+    extractStringsFromJson(my_object,keywords);
     for ( let i=0; i< keywords.length; i++ ){
         keyword = keywords[i];
         console.log(keyword);

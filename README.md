@@ -37,9 +37,9 @@ function extractStringsFromJson(obj, keywords) {
             let value = obj[key];
             if ( typeof value ===  "string" ){
                 newString = value.replace(/[`~!@#$%^&*()_|+\-=?;:,.'"<>\{\}\[\]\\\/]/gi, ' ')
-                let stringArray = newString.split(/(\s+)/);
+                let stringArray = newString.split(/(\s+)/).filter( e => e.trim().length > 0);
                 for ( let i=0; i< stringArray.length; i++ ){
-                    let singleString = stringArray[i].trim().toLowerCase();
+                    let singleString = stringArray[i].toLowerCase();
                     if ( singleString.length>0 && keywords.includes(singleString) === false )
                         keywords.push(singleString);
                 }
